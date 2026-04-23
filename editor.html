@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#1A1A1A">
+    <title>Presupuesto — Presuya</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="app">
+
+        <header class="app-header">
+            <div class="brand-mini">
+                <button class="icon-btn" onclick="window.location.href='dashboard.html'" title="Volver" type="button" style="margin-right:4px;">←</button>
+                <h1 id="pageTitle">Nuevo presupuesto</h1>
+            </div>
+            <div style="display:flex;gap:4px;">
+                <button class="icon-btn hidden" id="btnDelete" title="Eliminar" type="button">🗑️</button>
+            </div>
+        </header>
+
+        <main class="page">
+
+            <div class="editor-head">
+                <div>
+                    <div class="numero-label">Número</div>
+                    <div class="numero-value" id="numeroView">—</div>
+                </div>
+                <div style="text-align:right;">
+                    <div class="numero-label">Estado</div>
+                    <select id="estadoSelect" style="padding:6px 10px;border:1px solid var(--gray-300);border-radius:6px;font-weight:600;">
+                        <option value="borrador">Borrador</option>
+                        <option value="enviado">Enviado</option>
+                        <option value="aprobado">Aprobado</option>
+                        <option value="rechazado">Rechazado</option>
+                        <option value="vencido">Vencido</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Cliente</h2>
+                <div class="field">
+                    <label for="cliNombre">Nombre / Razón social *</label>
+                    <input type="text" id="cliNombre" required placeholder="Ej: Rotisería Doña María">
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="cliRuc">RUC / CI</label>
+                        <input type="text" id="cliRuc" placeholder="Opcional">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="cliDireccion">Dirección / Ciudad</label>
+                    <input type="text" id="cliDireccion" placeholder="Opcional">
+                </div>
+                <div class="field">
+                    <label for="cliWhatsapp">WhatsApp (para enviarle)</label>
+                    <input type="tel" id="cliWhatsapp" placeholder="Ej: 0991123456">
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Items</h2>
+                <div id="itemsContainer" class="items-list"></div>
+                <button type="button" class="btn btn-secondary btn-block" id="btnAddItem">+ Agregar item</button>
+            </div>
+
+            <div class="total-box">
+                <span class="label">Total</span>
+                <span class="value" id="totalView">Gs 0</span>
+            </div>
+
+            <div class="card">
+                <h2>Condiciones</h2>
+                <div class="field">
+                    <label for="formaPago">Forma de pago</label>
+                    <input type="text" id="formaPago" placeholder="Contado, transferencia, tarjeta...">
+                </div>
+                <div class="field">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea id="observaciones" rows="3" placeholder="Aclaraciones, plazos, qué incluye, etc."></textarea>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="validezDias">Validez (días)</label>
+                        <input type="number" id="validezDias" min="1" max="90" value="15">
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions-stack">
+                <button type="button" class="btn btn-primary btn-block" id="btnSave">Guardar</button>
+                <button type="button" class="btn btn-secondary btn-block" id="btnPDF">Descargar PDF</button>
+                <button type="button" class="btn btn-whatsapp btn-block" id="btnWhatsapp">Enviar por WhatsApp</button>
+            </div>
+
+        </main>
+
+        <!-- PDF template oculto, se renderiza en memoria al momento de descargar -->
+        <div id="pdfTemplate" style="position:absolute;left:-9999px;top:0;"></div>
+
+        <nav class="bottom-nav">
+            <a href="dashboard.html"><span class="nav-icon">📋</span><span>Presupuestos</span></a>
+            <a href="editor.html" class="active"><span class="nav-icon">➕</span><span>Nuevo</span></a>
+            <a href="perfil.html"><span class="nav-icon">👤</span><span>Mi Negocio</span></a>
+        </nav>
+
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <div id="loading" class="loading-overlay hidden"><div class="spinner"></div></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script type="module" src="js/editor.js"></script>
+</body>
+</html>

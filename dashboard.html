@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#1A1A1A">
+    <title>Mis Presupuestos — Presuya</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="app">
+
+        <header class="app-header">
+            <div class="brand-mini">
+                <div class="logo-dot">P</div>
+                <h1>Presupuestos</h1>
+            </div>
+            <button class="icon-btn" id="btnLogout" title="Cerrar sesión" type="button">⏻</button>
+        </header>
+
+        <main class="page">
+
+            <div class="toolbar">
+                <div class="search-box">
+                    <input type="search" id="search" placeholder="Buscar por cliente o número...">
+                </div>
+            </div>
+
+            <div class="filter-chips" id="filterChips">
+                <button class="chip active" data-filter="todos">Todos</button>
+                <button class="chip" data-filter="borrador">Borrador</button>
+                <button class="chip" data-filter="enviado">Enviado</button>
+                <button class="chip" data-filter="aprobado">Aprobado</button>
+                <button class="chip" data-filter="rechazado">Rechazado</button>
+                <button class="chip" data-filter="vencido">Vencido</button>
+            </div>
+
+            <div id="budgetList" class="budget-list"></div>
+
+            <div id="emptyState" class="empty-state hidden">
+                <div class="icon">📄</div>
+                <h3>Todavía no hay presupuestos</h3>
+                <p>Tocá el botón <strong>+</strong> para crear el primero.</p>
+            </div>
+
+        </main>
+
+        <button class="fab" id="fabNew" title="Nuevo presupuesto" type="button">+</button>
+
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="active"><span class="nav-icon">📋</span><span>Presupuestos</span></a>
+            <a href="editor.html"><span class="nav-icon">➕</span><span>Nuevo</span></a>
+            <a href="perfil.html"><span class="nav-icon">👤</span><span>Mi Negocio</span></a>
+        </nav>
+
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <div id="loading" class="loading-overlay hidden"><div class="spinner"></div></div>
+
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

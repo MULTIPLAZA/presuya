@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#1A1A1A">
+    <title>Presuya — Presupuestos fáciles</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="auth-shell">
+        <div class="auth-card">
+            <div class="auth-brand">
+                <div class="big-logo">P</div>
+                <h1>Presuya</h1>
+                <div class="tagline">Presupuestos profesionales en segundos</div>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login" type="button">Ingresar</button>
+                <button class="auth-tab" data-tab="signup" type="button">Crear cuenta</button>
+            </div>
+
+            <!-- LOGIN -->
+            <form id="loginForm" class="auth-form">
+                <div class="field">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" autocomplete="email" required>
+                </div>
+                <div class="field">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                <div style="text-align:center;margin-top:10px;">
+                    <button type="button" class="btn-link" id="forgotPwd">¿Olvidaste tu contraseña?</button>
+                </div>
+            </form>
+
+            <!-- SIGNUP -->
+            <form id="signupForm" class="auth-form hidden">
+                <div class="field">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" autocomplete="email" required>
+                </div>
+                <div class="field">
+                    <label for="signupPassword">Contraseña</label>
+                    <input type="password" id="signupPassword" autocomplete="new-password" minlength="6" required>
+                    <div class="hint">Mínimo 6 caracteres</div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Crear cuenta</button>
+                <div style="text-align:center;margin-top:14px;font-size:12px;color:var(--gray-500);">
+                    Al crear una cuenta aceptás nuestros términos de uso.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <div id="loading" class="loading-overlay hidden"><div class="spinner"></div></div>
+
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html>
