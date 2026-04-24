@@ -1,7 +1,7 @@
 // ============================================
 // Service Worker básico — solo shell caching
 // ============================================
-const CACHE_NAME = 'presuya-v5';
+const CACHE_NAME = 'presuya-v6';
 const ASSETS = [
     './',
     './index.html',

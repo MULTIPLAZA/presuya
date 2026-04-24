@@ -2,8 +2,10 @@
 // Helpers de UI (toast, loading, utils)
 // ============================================
 
-// Registrar Service Worker (una sola vez, desde cualquier página)
-if ('serviceWorker' in navigator) {
+// Registrar Service Worker, excepto en la vista pública (p.html)
+// — no queremos "instalar" la PWA en el dispositivo de un cliente
+//   que sólo abrió el link para ver/aprobar un presupuesto.
+if ('serviceWorker' in navigator && !location.pathname.endsWith('/p.html')) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./service-worker.js')
             .catch(err => console.warn('SW registration failed:', err));

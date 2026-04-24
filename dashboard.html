@@ -27,6 +27,25 @@
 
         <main class="page">
 
+            <div class="kpis" id="kpis">
+                <div class="kpi-card">
+                    <div class="kpi-label">Enviados este mes</div>
+                    <div class="kpi-value" id="kpiEnviados">—</div>
+                </div>
+                <div class="kpi-card kpi-ok">
+                    <div class="kpi-label">Aprobados</div>
+                    <div class="kpi-value" id="kpiAprobados">—</div>
+                </div>
+                <div class="kpi-card kpi-bad">
+                    <div class="kpi-label">Rechazados</div>
+                    <div class="kpi-value" id="kpiRechazados">—</div>
+                </div>
+                <div class="kpi-card kpi-money">
+                    <div class="kpi-label">Facturado</div>
+                    <div class="kpi-value" id="kpiFacturado">Gs 0</div>
+                </div>
+            </div>
+
             <div class="toolbar">
                 <div class="search-box">
                     <input type="search" id="search" placeholder="Buscar por cliente o número...">
@@ -51,6 +70,20 @@
             </div>
 
         </main>
+
+        <div class="sheet-backdrop hidden" id="sheetBackdrop"></div>
+        <div class="sheet hidden" id="stateSheet" role="dialog" aria-label="Cambiar estado">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title" id="sheetTitle">Cambiar estado</h3>
+            <div class="sheet-actions">
+                <button type="button" class="sheet-btn" data-estado="borrador"><span class="dot dot-borrador"></span>Borrador</button>
+                <button type="button" class="sheet-btn" data-estado="enviado"><span class="dot dot-enviado"></span>Marcar como enviado</button>
+                <button type="button" class="sheet-btn" data-estado="aprobado"><span class="dot dot-aprobado"></span>Marcar como aprobado</button>
+                <button type="button" class="sheet-btn" data-estado="rechazado"><span class="dot dot-rechazado"></span>Marcar como rechazado</button>
+                <button type="button" class="sheet-btn" data-estado="vencido"><span class="dot dot-vencido"></span>Marcar como vencido</button>
+            </div>
+            <button type="button" class="sheet-cancel" id="sheetCancel">Cancelar</button>
+        </div>
 
         <button class="fab" id="fabNew" title="Nuevo presupuesto" type="button">+</button>
 

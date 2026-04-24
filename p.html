@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#F5A623">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Presupuesto</title>
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="public-body">
+
+    <div class="public-shell">
+
+        <div id="publicLoading" class="public-loading">
+            <div class="spinner"></div>
+            <p>Cargando presupuesto...</p>
+        </div>
+
+        <div id="publicError" class="public-error hidden">
+            <div class="icon">⚠️</div>
+            <h2 id="errTitle">No se pudo cargar el presupuesto</h2>
+            <p id="errMsg">El link puede estar vencido o ser inválido. Pedile al emisor que te mande el link de nuevo.</p>
+        </div>
+
+        <div id="publicContent" class="public-content hidden">
+
+            <header class="public-header" id="publicHeader">
+                <img id="bizLogo" class="biz-logo" alt="" hidden>
+                <div class="biz-info">
+                    <div class="biz-name" id="bizName">—</div>
+                    <div class="biz-meta" id="bizMeta"></div>
+                </div>
+            </header>
+
+            <div class="estado-banner" id="estadoBanner"></div>
+
+            <section class="public-card">
+                <div class="public-numero">
+                    <div>
+                        <div class="lbl">Presupuesto</div>
+                        <div class="val" id="numero">—</div>
+                    </div>
+                    <div class="right">
+                        <div class="lbl">Fecha</div>
+                        <div class="val" id="fecha">—</div>
+                    </div>
+                </div>
+
+                <h3 class="sub">Para</h3>
+                <div class="cli-block" id="cliBlock">—</div>
+            </section>
+
+            <section class="public-card">
+                <h3 class="sub">Detalle</h3>
+                <div id="itemsList" class="public-items"></div>
+
+                <div class="public-total">
+                    <span>Total</span>
+                    <span id="totalView">Gs 0</span>
+                </div>
+            </section>
+
+            <section class="public-card" id="condicionesCard">
+                <h3 class="sub">Condiciones</h3>
+                <div class="kv"><span>Válido hasta:</span><strong id="fechaValidez">—</strong></div>
+                <div class="kv" id="formaPagoRow"><span>Forma de pago:</span><strong id="formaPago">—</strong></div>
+                <div class="obs" id="obsBlock"></div>
+            </section>
+
+            <div id="decisionArea" class="decision-area hidden">
+                <h3>¿Aprobás este presupuesto?</h3>
+                <p>Elegí una opción. La respuesta se registra y le llega al emisor.</p>
+                <div class="decision-buttons">
+                    <button type="button" class="btn btn-success btn-block" id="btnApprove">✓ Aprobar presupuesto</button>
+                    <button type="button" class="btn btn-danger-soft btn-block" id="btnReject">✗ Rechazar</button>
+                </div>
+            </div>
+
+            <div id="responseDone" class="decision-done hidden">
+                <div class="icon" id="doneIcon">✓</div>
+                <h3 id="doneTitle">¡Listo!</h3>
+                <p id="doneMsg">Tu respuesta quedó registrada. El emisor va a recibir el aviso.</p>
+            </div>
+
+            <footer class="public-foot">
+                <a id="contactLink" href="#" target="_blank" rel="noopener" class="hidden">Contactar al emisor</a>
+                <div class="powered">Generado con <a href="https://presuya.pages.dev/" target="_blank" rel="noopener">Presuya</a></div>
+            </footer>
+
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script type="module" src="js/public-view.js"></script>
+</body>
+</html>

@@ -104,6 +104,14 @@ async function loadBudget(id) {
     updateTotal();
 
     $('#btnDelete').classList.remove('hidden');
+    updateSendingButtons();
+}
+
+function updateSendingButtons() {
+    // Mostrar "Recordatorio" y "Copiar link" sólo si ya fue enviado
+    const enviado = currentBudget && ['enviado'].includes(currentBudget.estado);
+    $('#btnReminder')?.classList.toggle('hidden', !enviado);
+    $('#btnCopyLink')?.classList.toggle('hidden', !currentBudget?.link_publico_token);
 }
 
 // ---------- ITEMS ----------
@@ -134,6 +142,19 @@ function updateItem(id, field, value) {
 function autosize(el) {
     el.style.height = 'auto';
     el.style.height = Math.min(el.scrollHeight, 320) + 'px';
+}
+
+function generatePublicToken() {
+    // UUID sin guiones (32 chars, 128 bits de entropía)
+    if (crypto?.randomUUID) return crypto.randomUUID().replace(/-/g, '');
+    // Fallback
+    const rand = () => Math.random().toString(36).slice(2);
+    return (rand() + rand() + rand()).slice(0, 32);
+}
+
+function getPublicLink(budget) {
+    if (!budget?.link_publico_token) return null;
+    return `${window.location.origin}/p.html?t=${budget.link_publico_token}`;
 }
 
 function renderItems() {
@@ -258,6 +279,7 @@ async function saveBudget() {
             const { data: nextN, error: nErr } = await supabase.rpc('presu_next_number', { p_profile_id: currentUser.id });
             if (nErr) throw nErr;
             budgetData.numero = formatNumeroPresupuesto(nextN);
+            budgetData.link_publico_token = generatePublicToken();
 
             const { data, error } = await supabase
                 .from('presu_budgets')
@@ -289,6 +311,7 @@ async function saveBudget() {
         $('#numeroView').textContent = savedBudget.numero;
         $('#pageTitle').textContent = 'Editar presupuesto';
         $('#btnDelete').classList.remove('hidden');
+        updateSendingButtons();
         // Actualizar URL sin recargar
         if (!budgetId) {
             history.replaceState(null, '', `editor.html?id=${savedBudget.id}`);
@@ -362,11 +385,23 @@ async function downloadPDF() {
 }
 
 // ---------- WHATSAPP ----------
-function sendWhatsapp() {
-    if (!currentBudget) {
-        toast('Guardá el presupuesto primero', 'error');
-        return;
+async function ensurePublicToken() {
+    if (currentBudget && !currentBudget.link_publico_token) {
+        const token = generatePublicToken();
+        const { error } = await supabase
+            .from('presu_budgets')
+            .update({ link_publico_token: token })
+            .eq('id', currentBudget.id);
+        if (!error) currentBudget.link_publico_token = token;
     }
+}
+
+async function sendWhatsapp({ reminder = false } = {}) {
+    if (isDirty || !currentBudget) {
+        const saved = await saveBudget();
+        if (!saved) return;
+    }
+    await ensurePublicToken();
     const phone = normalizePYPhone($('#cliWhatsapp').value);
     if (!phone) {
         toast('Cargá el WhatsApp del cliente', 'error');
@@ -374,19 +409,69 @@ function sendWhatsapp() {
         return;
     }
 
-    const msg = [
-        `Hola ${currentBudget.cliente_nombre || 'estimado/a'}, ¿cómo estás?`,
+    const link = getPublicLink(currentBudget);
+    const totalFmt = formatGs(currentBudget.total);
+    const validezFmt = new Date(currentBudget.fecha_validez).toLocaleDateString('es-PY');
+    const nombreCli = currentBudget.cliente_nombre || 'estimado/a';
+    const neg = currentProfile.nombre_negocio;
+
+    const msg = reminder ? [
+        `Hola ${nombreCli}, te escribo para recordarte el presupuesto ${currentBudget.numero} que te envié desde ${neg}.`,
         ``,
-        `Te envío el presupuesto ${currentBudget.numero} de ${currentProfile.nombre_negocio}.`,
+        `Total: ${totalFmt}`,
+        `Válido hasta: ${validezFmt}`,
         ``,
-        `Total: ${formatGs(currentBudget.total)}`,
-        `Válido hasta: ${new Date(currentBudget.fecha_validez).toLocaleDateString('es-PY')}`,
+        `Podés revisarlo y aprobarlo desde este link:`,
+        link || '(link no disponible)',
         ``,
-        `Cualquier consulta estoy a tu disposición.`
+        `Cualquier consulta, estoy a tu disposición.`
+    ].join('\n') : [
+        `Hola ${nombreCli}, ¿cómo estás?`,
+        ``,
+        `Te envío el presupuesto ${currentBudget.numero} de ${neg}.`,
+        ``,
+        `Total: ${totalFmt}`,
+        `Válido hasta: ${validezFmt}`,
+        ``,
+        `Podés verlo y aprobarlo directamente acá:`,
+        link || '(link no disponible)',
+        ``,
+        `Cualquier consulta, estoy a tu disposición.`
     ].join('\n');
 
+    // Marcar como enviado si estaba en borrador
+    if (!reminder && currentBudget.estado === 'borrador') {
+        const { error } = await supabase
+            .from('presu_budgets')
+            .update({ estado: 'enviado' })
+            .eq('id', currentBudget.id);
+        if (!error) {
+            currentBudget.estado = 'enviado';
+            $('#estadoSelect').value = 'enviado';
+        }
+    }
+
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
-    setTimeout(() => toast('Adjuntá el PDF en el chat de WhatsApp', 'success'), 300);
+    setTimeout(() => toast(reminder ? 'Recordatorio enviado' : 'Presupuesto marcado como enviado', 'success'), 300);
+}
+
+async function copyPublicLink() {
+    if (isDirty || !currentBudget) {
+        const saved = await saveBudget();
+        if (!saved) return;
+    }
+    await ensurePublicToken();
+    const link = getPublicLink(currentBudget);
+    if (!link) {
+        toast('Este presupuesto aún no tiene link público', 'error');
+        return;
+    }
+    try {
+        await navigator.clipboard.writeText(link);
+        toast('Link copiado al portapapeles', 'success');
+    } catch {
+        window.prompt('Copiá este link:', link);
+    }
 }
 
 // ---------- DELETE ----------
@@ -432,7 +517,9 @@ function setupListeners() {
     $('#btnAddItem').addEventListener('click', () => addItem());
     $('#btnSave').addEventListener('click', saveBudget);
     $('#btnPDF').addEventListener('click', downloadPDF);
-    $('#btnWhatsapp').addEventListener('click', sendWhatsapp);
+    $('#btnWhatsapp').addEventListener('click', () => sendWhatsapp());
+    $('#btnReminder').addEventListener('click', () => sendWhatsapp({ reminder: true }));
+    $('#btnCopyLink').addEventListener('click', copyPublicLink);
     $('#btnDelete').addEventListener('click', deleteBudget);
     $('#estadoSelect').addEventListener('change', onEstadoChange);
 
