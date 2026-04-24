@@ -1,7 +1,7 @@
 // ============================================
 // Service Worker básico — solo shell caching
 // ============================================
-const CACHE_NAME = 'presuya-v1';
+const CACHE_NAME = 'presuya-v2';
 const ASSETS = [
     './',
     './index.html',
@@ -10,8 +10,8 @@ const ASSETS = [
     './perfil.html',
     './css/styles.css',
     './manifest.json',
-    './assets/icons/icon-192.png',
-    './assets/icons/icon-512.png',
+    './assets/icons/icon.svg',
+    './assets/icons/icon-maskable.svg',
 ];
 
 self.addEventListener('install', (e) => {
