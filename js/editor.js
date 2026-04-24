@@ -129,39 +129,71 @@ function updateItem(id, field, value) {
     isDirty = true;
 }
 
+function autosize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 320) + 'px';
+}
+
 function renderItems() {
     const c = $('#itemsContainer');
     if (items.length === 0) {
-        c.innerHTML = '<p style="text-align:center;color:var(--gray-500);padding:14px;font-size:13px;">Aún no agregaste items. Tocá "+ Agregar item".</p>';
+        c.innerHTML = '<p class="items-empty">Aún no agregaste items. Tocá "+ Agregar item" para empezar.</p>';
         return;
     }
-    c.innerHTML = items.map(i => `
-        <div class="item-row" data-id="${i.id}">
-            <button type="button" class="item-remove" data-remove="${i.id}" title="Eliminar">×</button>
-            <div class="item-desc">
-                <input type="text" placeholder="Descripción del item" value="${escapeHtml(i.descripcion)}" data-field="descripcion">
+    c.innerHTML = items.map((i, idx) => {
+        const subtotal = (Number(i.cantidad) || 0) * (Number(i.precio_unitario) || 0);
+        return `
+        <div class="item-card" data-id="${i.id}">
+            <div class="item-header">
+                <span class="item-index">Item ${idx + 1}</span>
+                <button type="button" class="item-remove" data-remove="${i.id}" title="Eliminar item" aria-label="Eliminar item">×</button>
             </div>
-            <div class="item-nums">
-                <input type="number" placeholder="Cant." value="${i.cantidad}" min="0" step="0.01" data-field="cantidad">
-                <input type="number" placeholder="Precio Gs" value="${i.precio_unitario}" min="0" data-field="precio_unitario">
+            <div class="item-field">
+                <label class="item-label">Descripción</label>
+                <textarea class="item-desc-input" rows="2" data-field="descripcion"
+                    placeholder="Ej: Instalación de toma doble schuko en living, con caño corrugado 3/4 embutido y cable 2x2.5mm">${escapeHtml(i.descripcion)}</textarea>
+            </div>
+            <div class="item-nums-grid">
+                <div class="item-num-cell">
+                    <label class="item-label">Cantidad</label>
+                    <input type="number" inputmode="decimal" min="0" step="0.01" value="${i.cantidad}" data-field="cantidad">
+                </div>
+                <div class="item-num-cell">
+                    <label class="item-label">Precio unit. (Gs)</label>
+                    <input type="number" inputmode="numeric" min="0" step="1" value="${i.precio_unitario}" data-field="precio_unitario">
+                </div>
+                <div class="item-num-cell item-subtotal-cell">
+                    <label class="item-label">Subtotal</label>
+                    <div class="item-subtotal-value">${formatGs(subtotal)}</div>
+                </div>
             </div>
         </div>
-    `).join('');
+        `;
+    }).join('');
 
-    c.querySelectorAll('.item-row input').forEach(input => {
-        input.addEventListener('input', (e) => {
-            const row = e.target.closest('.item-row');
-            const id = Number(row.dataset.id);
-            updateItem(id, e.target.dataset.field, e.target.value);
+    c.querySelectorAll('.item-card input, .item-card textarea').forEach(el => {
+        el.addEventListener('input', (e) => {
+            const card = e.target.closest('.item-card');
+            const id = Number(card.dataset.id);
+            const field = e.target.dataset.field;
+            updateItem(id, field, e.target.value);
+            if (field === 'cantidad' || field === 'precio_unitario') {
+                const item = items.find(x => x.id === id);
+                const sub = (Number(item.cantidad) || 0) * (Number(item.precio_unitario) || 0);
+                card.querySelector('.item-subtotal-value').textContent = formatGs(sub);
+            }
+            if (e.target.tagName === 'TEXTAREA') autosize(e.target);
         });
     });
 
     c.querySelectorAll('[data-remove]').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            removeItem(Number(e.target.dataset.remove));
+            removeItem(Number(e.currentTarget.dataset.remove));
         });
     });
+
+    c.querySelectorAll('.item-desc-input').forEach(autosize);
 }
 
 function updateTotal() {
