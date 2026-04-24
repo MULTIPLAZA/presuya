@@ -1,7 +1,7 @@
 // ============================================
 // Service Worker básico — solo shell caching
 // ============================================
-const CACHE_NAME = 'presuya-v8';
+const CACHE_NAME = 'presuya-v9';
 const ASSETS = [
     './',
     './index.html',
@@ -36,6 +36,8 @@ self.addEventListener('fetch', (e) => {
     if (url.origin.includes('supabase.co') || url.pathname.includes('/auth/')) {
         return;
     }
+    // No interferir con Pages Functions (SSR dinámico + admin APIs)
+    if (url.pathname.startsWith('/admin/') || url.pathname.startsWith('/p/')) return;
     if (e.request.method !== 'GET') return;
 
     // Navegaciones top-level: network-first, y si hay redirect reconstruimos el

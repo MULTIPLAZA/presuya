@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#1A1A1A">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin — Presuya</title>
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+    (function(){try{var c=localStorage.getItem('presu_brand_color');if(!c||!/^#[0-9a-f]{6}$/i.test(c))return;var m=c.replace('#','').match(/.{2}/g);var r=parseInt(m[0],16),g=parseInt(m[1],16),b=parseInt(m[2],16);var dk=function(f){return'#'+[r,g,b].map(function(v){var h=Math.round(v*(1-f)).toString(16);return h.length===1?'0'+h:h}).join('')};var lt=function(f){return'#'+[r,g,b].map(function(v){var h=Math.round(v+(255-v)*f).toString(16);return h.length===1?'0'+h:h}).join('')};var s=document.documentElement.style;s.setProperty('--primary',c);s.setProperty('--primary-dark',dk(0.14));s.setProperty('--primary-light',lt(0.88));s.setProperty('--primary-glow','rgba('+r+','+g+','+b+',0.18)');var mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=c;}catch(e){}})();
+    </script>
+</head>
+<body>
+
+    <div class="app">
+
+        <header class="app-header">
+            <div class="brand-mini">
+                <div class="logo-dot" style="background:var(--black);color:var(--primary);">🔐</div>
+                <h1>Admin — Licencias</h1>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+                <a href="dashboard.html" class="help-link" title="Volver al dashboard">↩</a>
+                <button class="icon-btn" id="btnLogout" title="Cerrar sesión" type="button">⏻</button>
+            </div>
+        </header>
+
+        <main class="page">
+
+            <div id="notAdminBox" class="card hidden" style="border-left:4px solid var(--danger);background:#fdecea;">
+                <h2 style="color:var(--danger);border:none;padding:0;margin-bottom:6px;">Acceso denegado</h2>
+                <p style="font-size:14px;color:var(--gray-700);">Esta página es sólo para el administrador de Presuya. Si tenés que crear usuarios y crees que esto es un error, revisá que tu <code>user_id</code> esté en la variable <code>ADMIN_USER_IDS</code> de Cloudflare Pages.</p>
+                <p style="font-size:13px;color:var(--gray-500);margin-top:8px;">Tu user_id: <code id="myUserId">—</code></p>
+            </div>
+
+            <div id="adminPanel" class="hidden">
+
+                <div class="card">
+                    <h2>Crear nueva licencia</h2>
+                    <form id="createUserForm">
+                        <div class="field">
+                            <label for="email">Email del cliente *</label>
+                            <input type="email" id="email" autocomplete="off" required placeholder="juan@ejemplo.com">
+                        </div>
+                        <div class="field">
+                            <label for="nombre_negocio">Nombre del negocio *</label>
+                            <input type="text" id="nombre_negocio" autocomplete="off" required placeholder="Juan Electricidad">
+                        </div>
+                        <div class="field">
+                            <label for="password">Contraseña</label>
+                            <div style="display:flex;gap:8px;">
+                                <input type="text" id="password" required style="flex:1;font-family:ui-monospace,Consolas,monospace;">
+                                <button type="button" id="btnRegen" class="btn btn-secondary" title="Generar nueva" style="width:44px;padding:0;">🔄</button>
+                            </div>
+                            <div class="hint">Auto-generada. Podés editarla o regenerarla.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Crear licencia</button>
+                    </form>
+                </div>
+
+                <div id="resultCard" class="card hidden" style="border-left:4px solid var(--success);background:#e8f9ee;">
+                    <h2 style="color:#1a7f3e;border:none;padding:0;margin-bottom:8px;">✓ Licencia creada</h2>
+                    <pre id="credBlock" class="cred-block"></pre>
+                    <div class="actions-stack" style="margin-top:14px;">
+                        <button type="button" class="btn btn-whatsapp btn-block" id="btnCopyWhatsapp">📋 Copiar mensaje para WhatsApp</button>
+                        <button type="button" class="btn btn-secondary btn-block" id="btnNew">+ Crear otra licencia</button>
+                    </div>
+                </div>
+
+                <div id="recentList" class="card hidden">
+                    <h2>Creadas en esta sesión</h2>
+                    <div id="recentContent"></div>
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <div id="loading" class="loading-overlay hidden"><div class="spinner"></div></div>
+
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>

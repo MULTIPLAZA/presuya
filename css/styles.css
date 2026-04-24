@@ -1399,6 +1399,35 @@ html, body {
 .help-link:hover { background: var(--gray-200); }
 
 /* ============================================
+   ADMIN — crear licencias
+============================================ */
+.cred-block {
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--gray-900);
+    max-height: 300px;
+    overflow-y: auto;
+}
+.recent-row {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+}
+.recent-row:last-child { border-bottom: none; }
+.recent-row .muted {
+    font-size: 12px;
+    color: var(--gray-500);
+    font-family: ui-monospace, Consolas, monospace;
+    margin-top: 2px;
+}
+
+/* ============================================
    DESKTOP (tablet/pc)
 ============================================ */
 @media (min-width: 768px) {
