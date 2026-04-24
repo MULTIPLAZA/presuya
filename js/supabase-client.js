@@ -12,13 +12,16 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     }
 });
 
-// Helper: obtiene la sesión y el perfil, o redirige a login si no hay sesión
+// Helper: obtiene la sesión y asegura que exista el perfil.
+// Redirige a login si no hay sesión.
 export async function requireAuth(redirectTo = 'index.html') {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
         window.location.href = redirectTo;
         return null;
     }
+    // Garantizar que tenga perfil (para usuarios creados antes del fix de trigger)
+    await ensureProfile(session.user);
     return session;
 }
 
@@ -42,4 +45,35 @@ export async function getCurrentProfile() {
 export async function logout() {
     await supabase.auth.signOut();
     window.location.href = 'index.html';
+}
+
+// Helper: garantiza que el perfil del usuario exista.
+// Se llama después de signup y después de login para cubrir todos los casos
+// (usuarios creados antes del fix, nuevos usuarios, etc).
+// Usa upsert con ignoreDuplicates para ser idempotente.
+export async function ensureProfile(user) {
+    if (!user) return null;
+    const { data: existing } = await supabase
+        .from('presu_profiles')
+        .select('id, onboarding_completo')
+        .eq('id', user.id)
+        .maybeSingle();
+
+    if (existing) return existing;
+
+    const { data, error } = await supabase
+        .from('presu_profiles')
+        .insert({
+            id: user.id,
+            nombre_negocio: 'Mi Negocio',
+            email: user.email || null,
+        })
+        .select('id, onboarding_completo')
+        .single();
+
+    if (error) {
+        console.error('No se pudo crear perfil:', error);
+        return null;
+    }
+    return data;
 }

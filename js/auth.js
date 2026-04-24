@@ -1,19 +1,14 @@
 // ============================================
 // Login / Signup / Forgot Password
 // ============================================
-import { supabase } from './supabase-client.js';
+import { supabase, ensureProfile } from './supabase-client.js';
 import { $, $$, toast, showLoading } from './ui.js';
 
-// Si ya hay sesión, ir directo al dashboard
+// Si ya hay sesión, asegurar perfil y redirigir
 (async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
-        // Verificar si ya completó onboarding
-        const { data: profile } = await supabase
-            .from('presu_profiles')
-            .select('onboarding_completo')
-            .eq('id', session.user.id)
-            .single();
+        const profile = await ensureProfile(session.user);
         window.location.href = (profile && profile.onboarding_completo) ? 'dashboard.html' : 'perfil.html?onboarding=1';
     }
 })();
@@ -44,13 +39,8 @@ $('#loginForm').addEventListener('submit', async (e) => {
         return;
     }
 
-    // Checkear onboarding
-    const { data: profile } = await supabase
-        .from('presu_profiles')
-        .select('onboarding_completo')
-        .eq('id', data.user.id)
-        .single();
-
+    // Asegurar perfil y redirigir
+    const profile = await ensureProfile(data.user);
     window.location.href = (profile && profile.onboarding_completo) ? 'dashboard.html' : 'perfil.html?onboarding=1';
 });
 
@@ -75,6 +65,7 @@ $('#signupForm').addEventListener('submit', async (e) => {
 
     if (data.session) {
         // Autenticado directamente (cuando el proyecto Supabase no exige confirmación de email)
+        await ensureProfile(data.user);
         window.location.href = 'perfil.html?onboarding=1';
     } else {
         toast('Te mandamos un email para confirmar la cuenta.', 'success');

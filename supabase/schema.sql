@@ -95,21 +95,9 @@ CREATE TRIGGER trg_presu_budgets_updated
     BEFORE UPDATE ON presu_budgets
     FOR EACH ROW EXECUTE FUNCTION presu_set_updated_at();
 
--- Auto crear perfil al registrarse
-CREATE OR REPLACE FUNCTION presu_handle_new_user()
-RETURNS TRIGGER AS $$
-BEGIN
-    INSERT INTO presu_profiles (id, nombre_negocio, email)
-    VALUES (NEW.id, 'Mi Negocio', NEW.email)
-    ON CONFLICT (id) DO NOTHING;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
-DROP TRIGGER IF EXISTS trg_presu_on_auth_user_created ON auth.users;
-CREATE TRIGGER trg_presu_on_auth_user_created
-    AFTER INSERT ON auth.users
-    FOR EACH ROW EXECUTE FUNCTION presu_handle_new_user();
+-- NOTA: la creación del perfil se hace desde el cliente JS (ver ensureProfile()
+-- en js/supabase-client.js), no por trigger en auth.users. Los triggers sobre
+-- auth.users suelen fallar por contexto de permisos y devuelven HTTP 500.
 
 -- Función RPC para obtener el próximo número e incrementar atómicamente
 CREATE OR REPLACE FUNCTION presu_next_number(p_profile_id UUID)
@@ -158,6 +146,10 @@ ALTER TABLE presu_items ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "presu_profiles_select_own" ON presu_profiles;
 CREATE POLICY "presu_profiles_select_own" ON presu_profiles
     FOR SELECT USING (auth.uid() = id);
+
+DROP POLICY IF EXISTS "presu_profiles_insert_own" ON presu_profiles;
+CREATE POLICY "presu_profiles_insert_own" ON presu_profiles
+    FOR INSERT WITH CHECK (auth.uid() = id);
 
 DROP POLICY IF EXISTS "presu_profiles_update_own" ON presu_profiles;
 CREATE POLICY "presu_profiles_update_own" ON presu_profiles
