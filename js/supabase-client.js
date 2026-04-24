@@ -55,7 +55,7 @@ export async function ensureProfile(user) {
     if (!user) return null;
     const { data: existing } = await supabase
         .from('presu_profiles')
-        .select('id, onboarding_completo')
+        .select('id, onboarding_completo, color_primario')
         .eq('id', user.id)
         .maybeSingle();
 
@@ -68,7 +68,7 @@ export async function ensureProfile(user) {
             nombre_negocio: 'Mi Negocio',
             email: user.email || null,
         })
-        .select('id, onboarding_completo')
+        .select('id, onboarding_completo, color_primario')
         .single();
 
     if (error) {

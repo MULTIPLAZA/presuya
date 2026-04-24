@@ -4,6 +4,7 @@
 import { supabase, requireAuth } from './supabase-client.js';
 import { $, $$, toast, showLoading, formatGs, formatNumeroPresupuesto, normalizePYPhone, addDays, escapeHtml } from './ui.js';
 import { buildPdfHtml } from './pdf-template.js';
+import { applyBrandColor } from './branding.js';
 
 let currentUser = null;
 let currentProfile = null;
@@ -36,6 +37,7 @@ async function init() {
         return;
     }
     currentProfile = profile;
+    applyBrandColor(profile.color_primario);
 
     // Cargar presupuesto si hay id
     if (budgetId) {

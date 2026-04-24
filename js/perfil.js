@@ -4,6 +4,7 @@
 import { supabase, requireAuth, logout } from './supabase-client.js';
 import { STORAGE_BUCKET } from './config.js';
 import { $, toast, showLoading } from './ui.js';
+import { applyBrandColor } from './branding.js';
 
 let currentUser = null;
 let currentProfile = null;
@@ -28,6 +29,7 @@ async function init() {
         return;
     }
     currentProfile = profile;
+    applyBrandColor(profile.color_primario);
     renderPerfil(profile);
 }
 
@@ -46,6 +48,11 @@ function renderPerfil(p) {
         $('#avatarPreview').innerHTML = `<img src="${p.logo_url}" alt="logo">`;
     }
 }
+
+// Preview en vivo del color de marca mientras el usuario lo elige
+$('#colorPrimario').addEventListener('input', (e) => {
+    applyBrandColor(e.target.value);
+});
 
 // Logo upload
 $('#btnPickLogo').addEventListener('click', () => $('#logoFile').click());

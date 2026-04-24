@@ -3,6 +3,7 @@
 // ============================================
 import { supabase, requireAuth, logout } from './supabase-client.js';
 import { $, $$, toast, showLoading, formatGs, formatDate, escapeHtml } from './ui.js';
+import { applyBrandColor } from './branding.js';
 
 let allBudgets = [];
 let currentFilter = 'todos';
@@ -12,16 +13,19 @@ async function init() {
     const session = await requireAuth('index.html');
     if (!session) return;
 
-    // Verificar onboarding
+    // Verificar onboarding y aplicar branding
     const { data: profile } = await supabase
         .from('presu_profiles')
-        .select('onboarding_completo')
+        .select('onboarding_completo, color_primario')
         .eq('id', session.user.id)
         .single();
 
-    if (profile && !profile.onboarding_completo) {
-        window.location.href = 'perfil.html?onboarding=1';
-        return;
+    if (profile) {
+        applyBrandColor(profile.color_primario);
+        if (!profile.onboarding_completo) {
+            window.location.href = 'perfil.html?onboarding=1';
+            return;
+        }
     }
 
     await loadBudgets(session.user.id);

@@ -9,6 +9,9 @@
     <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
     <link rel="apple-touch-icon" href="assets/icons/icon.svg">
     <link rel="stylesheet" href="css/styles.css">
+    <script>
+    (function(){try{var c=localStorage.getItem('presu_brand_color');if(!c||!/^#[0-9a-f]{6}$/i.test(c))return;var m=c.replace('#','').match(/.{2}/g);var r=parseInt(m[0],16),g=parseInt(m[1],16),b=parseInt(m[2],16);var dk=function(f){return'#'+[r,g,b].map(function(v){var h=Math.round(v*(1-f)).toString(16);return h.length===1?'0'+h:h}).join('')};var lt=function(f){return'#'+[r,g,b].map(function(v){var h=Math.round(v+(255-v)*f).toString(16);return h.length===1?'0'+h:h}).join('')};var s=document.documentElement.style;s.setProperty('--primary',c);s.setProperty('--primary-dark',dk(0.14));s.setProperty('--primary-light',lt(0.88));s.setProperty('--primary-glow','rgba('+r+','+g+','+b+',0.18)');var mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=c;}catch(e){}})();
+    </script>
 </head>
 <body>
 
@@ -20,12 +23,6 @@
                 <div class="tagline">Presupuestos profesionales en segundos</div>
             </div>
 
-            <div class="auth-tabs">
-                <button class="auth-tab active" data-tab="login" type="button">Ingresar</button>
-                <button class="auth-tab" data-tab="signup" type="button">Crear cuenta</button>
-            </div>
-
-            <!-- LOGIN -->
             <form id="loginForm" class="auth-form">
                 <div class="field">
                     <label for="loginEmail">Email</label>
@@ -41,22 +38,10 @@
                 </div>
             </form>
 
-            <!-- SIGNUP -->
-            <form id="signupForm" class="auth-form hidden">
-                <div class="field">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" autocomplete="email" required>
-                </div>
-                <div class="field">
-                    <label for="signupPassword">Contraseña</label>
-                    <input type="password" id="signupPassword" autocomplete="new-password" minlength="6" required>
-                    <div class="hint">Mínimo 6 caracteres</div>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Crear cuenta</button>
-                <div style="text-align:center;margin-top:14px;font-size:12px;color:var(--gray-500);">
-                    Al crear una cuenta aceptás nuestros términos de uso.
-                </div>
-            </form>
+            <div class="auth-foot">
+                <strong>¿Querés usar Presuya?</strong><br>
+                Escribinos a <a href="https://wa.me/595992316979?text=Hola%2C%20quiero%20activar%20mi%20cuenta%20de%20Presuya" target="_blank" rel="noopener">WhatsApp</a> y te damos tu cuenta.
+            </div>
         </div>
     </div>
 

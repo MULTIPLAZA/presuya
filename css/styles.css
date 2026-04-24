@@ -9,6 +9,7 @@
     --primary: #F5A623;
     --primary-dark: #D88F15;
     --primary-light: #FEF3DF;
+    --primary-glow: rgba(245,166,35,0.18);
     --black: #1A1A1A;
     --gray-900: #2C2C2C;
     --gray-700: #4A4A4A;
@@ -177,6 +178,23 @@ html, body {
     box-shadow: var(--shadow-sm);
 }
 
+.auth-foot {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--gray-200);
+    font-size: 13px;
+    color: var(--gray-500);
+    line-height: 1.55;
+    text-align: center;
+}
+.auth-foot strong { color: var(--gray-700); }
+.auth-foot a {
+    color: var(--whatsapp);
+    font-weight: 700;
+    text-decoration: none;
+}
+.auth-foot a:hover { text-decoration: underline; }
+
 /* ============================================
    FORMS
 ============================================ */
@@ -210,7 +228,7 @@ html, body {
 .field select:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(245,166,35,0.15);
+    box-shadow: 0 0 0 3px var(--primary-glow);
 }
 .field textarea { resize: vertical; min-height: 70px; }
 
@@ -593,7 +611,7 @@ html, body {
 .item-desc-input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(245,166,35,0.18);
+    box-shadow: 0 0 0 3px var(--primary-glow);
 }
 .item-nums-grid {
     display: grid;
@@ -616,7 +634,7 @@ html, body {
 .item-num-cell input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(245,166,35,0.18);
+    box-shadow: 0 0 0 3px var(--primary-glow);
 }
 .item-subtotal-value {
     padding: 11px 12px;
