@@ -154,7 +154,8 @@ function generatePublicToken() {
 
 function getPublicLink(budget) {
     if (!budget?.link_publico_token) return null;
-    return `${window.location.origin}/p.html?t=${budget.link_publico_token}`;
+    // Ruta con preview OG dinámico (logo + nombre del negocio)
+    return `${window.location.origin}/p/${budget.link_publico_token}`;
 }
 
 function renderItems() {

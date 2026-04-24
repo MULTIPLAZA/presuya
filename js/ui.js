@@ -2,12 +2,14 @@
 // Helpers de UI (toast, loading, utils)
 // ============================================
 
-// Registrar Service Worker, excepto en la vista pública (p.html)
+// Registrar Service Worker, excepto en las vistas públicas (p.html y /p/*)
 // — no queremos "instalar" la PWA en el dispositivo de un cliente
 //   que sólo abrió el link para ver/aprobar un presupuesto.
-if ('serviceWorker' in navigator && !location.pathname.endsWith('/p.html')) {
+const __isPublicView = location.pathname.endsWith('/p.html')
+    || /^\/p\//.test(location.pathname);
+if ('serviceWorker' in navigator && !__isPublicView) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js')
+        navigator.serviceWorker.register('/service-worker.js')
             .catch(err => console.warn('SW registration failed:', err));
     });
 }

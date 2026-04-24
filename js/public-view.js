@@ -7,7 +7,13 @@ import { supabase } from './supabase-client.js';
 import { $, toast, formatGs, escapeHtml } from './ui.js';
 import { applyBrandColor } from './branding.js';
 
-const token = new URLSearchParams(window.location.search).get('t');
+// El token puede venir:
+//   1) Inyectado por la Pages Function (/p/<token>) en window.__PUBLIC_TOKEN
+//   2) En el path /p/<token> directamente (backup si la Function falla)
+//   3) En querystring ?t=<token> (links antiguos /p.html?t=...)
+const token = window.__PUBLIC_TOKEN
+    || (window.location.pathname.match(/\/p\/([A-Za-z0-9_-]+)/) || [])[1]
+    || new URLSearchParams(window.location.search).get('t');
 
 const ESTADO_LABELS = {
     borrador: { txt: 'Borrador', cls: 'banner-info' },
