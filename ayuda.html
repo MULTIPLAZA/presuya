@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#F5A623">
+    <title>Ayuda — Presuya</title>
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+    (function(){try{var c=localStorage.getItem('presu_brand_color');if(!c||!/^#[0-9a-f]{6}$/i.test(c))return;var m=c.replace('#','').match(/.{2}/g);var r=parseInt(m[0],16),g=parseInt(m[1],16),b=parseInt(m[2],16);var dk=function(f){return'#'+[r,g,b].map(function(v){var h=Math.round(v*(1-f)).toString(16);return h.length===1?'0'+h:h}).join('')};var lt=function(f){return'#'+[r,g,b].map(function(v){var h=Math.round(v+(255-v)*f).toString(16);return h.length===1?'0'+h:h}).join('')};var s=document.documentElement.style;s.setProperty('--primary',c);s.setProperty('--primary-dark',dk(0.14));s.setProperty('--primary-light',lt(0.88));s.setProperty('--primary-glow','rgba('+r+','+g+','+b+',0.18)');var mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=c;}catch(e){}})();
+    </script>
+</head>
+<body class="public-body">
+
+    <div class="help-shell">
+
+        <header class="help-header">
+            <a href="dashboard.html" class="help-back" title="Volver">←</a>
+            <div>
+                <div class="help-title">Ayuda de Presuya</div>
+                <div class="help-subtitle">Cómo usar la app paso a paso</div>
+            </div>
+        </header>
+
+        <nav class="help-toc">
+            <strong>En esta guía:</strong>
+            <ol>
+                <li><a href="#que-es">Qué es Presuya</a></li>
+                <li><a href="#primer-login">Primer ingreso</a></li>
+                <li><a href="#mi-negocio">Configurar "Mi Negocio"</a></li>
+                <li><a href="#crear">Crear un presupuesto</a></li>
+                <li><a href="#items">Cargar los items</a></li>
+                <li><a href="#guardar-pdf">Guardar y descargar PDF</a></li>
+                <li><a href="#whatsapp">Enviar por WhatsApp</a></li>
+                <li><a href="#link-cliente">El link que recibe tu cliente</a></li>
+                <li><a href="#recordatorio">Enviar un recordatorio</a></li>
+                <li><a href="#dashboard">Panel principal y KPIs</a></li>
+                <li><a href="#estados">Estados de un presupuesto</a></li>
+                <li><a href="#cambiar-estado">Cambiar estado sin entrar al presupuesto</a></li>
+                <li><a href="#faq">Preguntas frecuentes</a></li>
+                <li><a href="#contacto">Soporte y contacto</a></li>
+            </ol>
+        </nav>
+
+        <section id="que-es" class="help-section">
+            <h2>1. Qué es Presuya</h2>
+            <p>Presuya es una app pensada para <strong>técnicos, instaladores, electricistas, plomeros, gasistas, pintores, albañiles y cualquier profesional</strong> que necesite pasar presupuestos a sus clientes de forma rápida y profesional.</p>
+            <p>Con Presuya podés:</p>
+            <ul>
+                <li>Crear un presupuesto desde el celular en menos de 2 minutos.</li>
+                <li>Descargarlo en PDF con tu logo y colores.</li>
+                <li>Enviárselo por WhatsApp a tu cliente con un link para que lo apruebe.</li>
+                <li>Hacer seguimiento de cuántos enviaste, cuántos te aprobaron y cuánto facturaste.</li>
+            </ul>
+        </section>
+
+        <section id="primer-login" class="help-section">
+            <h2>2. Primer ingreso</h2>
+            <p>Cuando te damos tu cuenta, te mandamos tres datos:</p>
+            <ul>
+                <li><strong>URL:</strong> https://presuya.pages.dev/</li>
+                <li><strong>Email</strong></li>
+                <li><strong>Contraseña inicial</strong></li>
+            </ul>
+            <p>Entrá a la URL desde el celular o la notebook, poné email y contraseña, y tocá <strong>Ingresar</strong>.</p>
+            <div class="tip">
+                <strong>Consejo:</strong> cambiá tu contraseña la primera vez — tocá <em>¿Olvidaste tu contraseña?</em> en el login y te llega un email para ponerla a tu gusto.
+            </div>
+        </section>
+
+        <section id="mi-negocio" class="help-section">
+            <h2>3. Configurar "Mi Negocio"</h2>
+            <p>Lo primero que vas a ver al ingresar es la pantalla de <strong>Mi Negocio</strong>. Completá estos datos — van a aparecer en todos tus presupuestos:</p>
+            <ul>
+                <li><strong>Nombre o razón social</strong> (obligatorio).</li>
+                <li><strong>RUC</strong> — si tenés, mejor.</li>
+                <li><strong>Dirección</strong> — sirve para que el cliente sepa dónde estás.</li>
+                <li><strong>Teléfono / WhatsApp</strong> — importante: tu cliente va a poder escribirte desde el link que le mandes.</li>
+                <li><strong>Email de contacto</strong>.</li>
+                <li><strong>Logo</strong> — tocá <em>Cambiar logo</em>, elegí una imagen PNG, JPG o WebP de máximo 500 KB. Se ve arriba a la izquierda en tu PDF.</li>
+                <li><strong>Color de marca</strong> — elegí el color que te represente. Va a pintar el header de la app, los botones y el total del PDF. <strong>El cambio se ve en vivo</strong> mientras lo elegís.</li>
+                <li><strong>Validez por defecto</strong> — en días. Los presupuestos nuevos arrancan con este valor (podés cambiarlo en cada uno).</li>
+                <li><strong>Forma de pago por defecto</strong> — el texto que querés que aparezca siempre (ej: "Contado, transferencia o tarjeta").</li>
+            </ul>
+            <p>Tocá <strong>Guardar y continuar</strong>. Listo, tu cuenta está lista.</p>
+            <div class="tip">Podés volver a <strong>Mi Negocio</strong> en cualquier momento desde el menú inferior (ícono 👤) para cambiar cualquier dato.</div>
+        </section>
+
+        <section id="crear" class="help-section">
+            <h2>4. Crear un presupuesto</h2>
+            <p>Desde el dashboard tocá el botón redondo con el <strong>+</strong> (abajo a la derecha), o la pestaña <strong>Nuevo</strong> del menú inferior.</p>
+            <p>Primero cargá los datos del cliente:</p>
+            <ul>
+                <li><strong>Nombre o razón social</strong> (obligatorio).</li>
+                <li><strong>RUC / CI</strong> (opcional).</li>
+                <li><strong>Dirección / Ciudad</strong> (opcional).</li>
+                <li><strong>WhatsApp del cliente</strong> — fundamental si le vas a mandar el presupuesto por WhatsApp. Podés poner <code>0991123456</code> o <code>595991123456</code>, la app lo arregla sola.</li>
+            </ul>
+        </section>
+
+        <section id="items" class="help-section">
+            <h2>5. Cargar los items</h2>
+            <p>Cada item es una línea del trabajo que vas a cotizar. Tocá <strong>+ Agregar item</strong> para sumar todos los que necesites.</p>
+            <p>Por item vas a ver:</p>
+            <ul>
+                <li><strong>Descripción</strong> — acá podés escribir tanto como necesites. El campo crece solo a medida que tipeás. Podés poner algo corto ("Instalación de toma doble") o muy detallado ("Instalación de 1 toma doble schuko en living, con caño corrugado 3/4 embutido, cable 2x2.5mm, 4m de tendido hasta el tablero").</li>
+                <li><strong>Cantidad</strong> — número con decimales (por ejemplo, 1.5 para un metraje).</li>
+                <li><strong>Precio unitario</strong> — en guaraníes, sin puntos ni comas.</li>
+                <li><strong>Subtotal</strong> — lo calcula solo la app. No se toca, es solo para que veas el total de ese item.</li>
+            </ul>
+            <p>Abajo vas a ver el <strong>total general</strong> actualizado en vivo mientras cargás los items.</p>
+            <div class="tip">Si cargaste un item de más, tocá la <strong>×</strong> arriba a la derecha del item para borrarlo.</div>
+        </section>
+
+        <section id="guardar-pdf" class="help-section">
+            <h2>6. Guardar y descargar PDF</h2>
+            <p>Cuando terminaste de cargar:</p>
+            <ol>
+                <li>Completá <strong>Forma de pago</strong>, <strong>Observaciones</strong> (opcional — ahí podés aclarar qué incluye, plazos, garantía, lo que quieras) y <strong>Validez en días</strong>.</li>
+                <li>Tocá <strong>Guardar</strong>. Si es el primero, Presuya le asigna un número automático (PRES-2026-0001, 0002, ...).</li>
+                <li>Tocá <strong>Descargar PDF</strong>. El archivo se descarga a tu celular o computadora con tu logo y tu color de marca.</li>
+            </ol>
+        </section>
+
+        <section id="whatsapp" class="help-section">
+            <h2>7. Enviar por WhatsApp</h2>
+            <p>Este es el flujo más importante. Tocá <strong>Enviar por WhatsApp</strong>. Pasan tres cosas:</p>
+            <ol>
+                <li>El presupuesto se guarda (por si olvidaste apretar Guardar).</li>
+                <li>Si estaba en <em>Borrador</em>, pasa automáticamente a <em>Enviado</em>.</li>
+                <li>Se abre WhatsApp con un mensaje pre-armado para tu cliente, que incluye:
+                    <ul>
+                        <li>Saludo con el nombre del cliente.</li>
+                        <li>Número del presupuesto.</li>
+                        <li>Total y fecha de validez.</li>
+                        <li><strong>Un link para que vea y apruebe el presupuesto online.</strong></li>
+                    </ul>
+                </li>
+            </ol>
+            <p>Vos solo tenés que apretar <strong>Enviar</strong> en WhatsApp. Si querés, adjuntá también el PDF en el mismo chat (es más profesional).</p>
+        </section>
+
+        <section id="link-cliente" class="help-section">
+            <h2>8. El link que recibe tu cliente</h2>
+            <p>Cuando tu cliente toca el link del mensaje, se abre una página con:</p>
+            <ul>
+                <li><strong>Tu logo, nombre y color de marca.</strong> Se ve como si fuera tu propia app.</li>
+                <li>Todos los datos del presupuesto.</li>
+                <li>Dos botones grandes: <strong>✓ Aprobar presupuesto</strong> y <strong>✗ Rechazar</strong>.</li>
+                <li>Un botón para contactarte por WhatsApp directamente.</li>
+            </ul>
+            <p>Cuando tu cliente toca <strong>Aprobar</strong> o <strong>Rechazar</strong>, el estado del presupuesto cambia automáticamente en tu dashboard. <strong>Vas a verlo actualizado la próxima vez que entrés</strong> (o al recargar).</p>
+            <div class="tip">
+                El cliente <strong>no necesita crear cuenta ni instalar nada</strong>. Solo toca el link y responde. Es lo más simple posible.
+            </div>
+            <p>Si la fecha de validez ya pasó, el cliente va a ver un aviso de <em>"Este presupuesto venció"</em> y no va a poder aprobarlo. Si ya lo respondió antes, tampoco lo puede cambiar.</p>
+        </section>
+
+        <section id="recordatorio" class="help-section">
+            <h2>9. Enviar un recordatorio</h2>
+            <p>Si pasaron unos días y tu cliente no te respondió, entrá al presupuesto desde el dashboard y tocá <strong>Enviar recordatorio</strong>. Se abre WhatsApp con un mensaje distinto, enfocado en "te recuerdo el presupuesto...". Incluye el mismo link para que lo apruebe.</p>
+            <p>Este botón solo aparece si el presupuesto ya está en estado <em>Enviado</em>.</p>
+        </section>
+
+        <section id="dashboard" class="help-section">
+            <h2>10. Panel principal (dashboard)</h2>
+            <p>Al entrar a la app vas a ver tu panel con:</p>
+            <ul>
+                <li><strong>4 cajitas arriba (KPIs)</strong> con los números del mes en curso:
+                    <ul>
+                        <li><strong>Enviados este mes</strong> — cuántos presupuestos salieron.</li>
+                        <li><strong>Aprobados</strong> — cuántos te aprobaron (en verde).</li>
+                        <li><strong>Rechazados</strong> — cuántos te rechazaron (en rojo).</li>
+                        <li><strong>Facturado</strong> — suma en guaraníes de los que te aprobaron.</li>
+                    </ul>
+                </li>
+                <li><strong>Filtros</strong> (Todos, Borrador, Enviado, Aprobado, Rechazado, Vencido).</li>
+                <li><strong>Buscador</strong> por nombre de cliente o número.</li>
+                <li><strong>La lista de todos tus presupuestos</strong>, con su estado a la vista.</li>
+            </ul>
+            <p>Tocá cualquier presupuesto para abrirlo y editarlo.</p>
+        </section>
+
+        <section id="estados" class="help-section">
+            <h2>11. Estados de un presupuesto</h2>
+            <div class="estado-list">
+                <div><span class="dot dot-borrador"></span><strong>Borrador</strong> — todavía no se lo mandaste al cliente. Podés seguir editándolo tranquilo.</div>
+                <div><span class="dot dot-enviado"></span><strong>Enviado</strong> — ya se lo pasaste al cliente. Esperás respuesta.</div>
+                <div><span class="dot dot-aprobado"></span><strong>Aprobado</strong> — el cliente dijo que sí. Podés empezar el trabajo.</div>
+                <div><span class="dot dot-rechazado"></span><strong>Rechazado</strong> — el cliente dijo que no. Podés ofrecerle otra alternativa.</div>
+                <div><span class="dot dot-vencido"></span><strong>Vencido</strong> — pasó la fecha de validez y el cliente no respondió. Si querés, hacé un nuevo presupuesto actualizado.</div>
+            </div>
+        </section>
+
+        <section id="cambiar-estado" class="help-section">
+            <h2>12. Cambiar estado sin entrar al presupuesto</h2>
+            <p>Desde el dashboard, tocá <strong>la etiqueta de estado</strong> de cualquier presupuesto (la bolita con la palabra "borrador", "enviado", etc). Se abre una bandejita abajo con las 5 opciones. Tocá la que quieras y listo — el cambio se guarda solo.</p>
+            <p>Esto es útil para marcar manualmente como <em>Aprobado</em> cuando el cliente te confirma por otro medio (llamada, visita, etc), sin que use el link.</p>
+        </section>
+
+        <section id="faq" class="help-section">
+            <h2>13. Preguntas frecuentes</h2>
+
+            <h3>¿Se puede usar sin internet?</h3>
+            <p>La app carga aunque no tengas conexión (está guardada en tu celular como PWA), pero <strong>para crear, guardar o enviar presupuestos necesitás estar online</strong>. No queda nada "en cola" si no hay señal.</p>
+
+            <h3>¿Puedo editar un presupuesto ya enviado?</h3>
+            <p>Sí, pero tené cuidado: si tu cliente ya recibió el link y vos cambiás números, el cliente va a ver los números nuevos cuando entre al link. Mejor crear un presupuesto nuevo si hay cambios importantes.</p>
+
+            <h3>¿Cómo hago para que otro me apruebe un presupuesto si no tiene WhatsApp?</h3>
+            <p>Usá el botón <strong>Copiar link del cliente</strong> en el editor. Te copia al portapapeles el link público para que lo pegues donde quieras (email, Telegram, SMS, etc).</p>
+
+            <h3>¿Puedo borrar un presupuesto?</h3>
+            <p>Sí. Entrá al presupuesto y tocá el ícono de papelera 🗑️ arriba a la derecha. <strong>Es irreversible.</strong></p>
+
+            <h3>¿El PDF se guarda en la nube?</h3>
+            <p>No, el PDF se genera en tu dispositivo cada vez que lo descargás. En la nube queda solo la información (datos, items, totales) — el PDF se arma al momento con tu logo y color actuales.</p>
+
+            <h3>¿Cuántos presupuestos puedo hacer?</h3>
+            <p>Sin límite. Hacé los que necesites.</p>
+
+            <h3>Me equivoqué con el color o el logo, ¿lo puedo cambiar después?</h3>
+            <p>Sí, cuando quieras. Andá a <strong>Mi Negocio</strong> y cambialo. A partir de ese momento, los presupuestos nuevos que descargues ya salen con el cambio (los viejos también si los volvés a descargar en PDF).</p>
+
+            <h3>El cliente perdió el link. ¿Cómo se lo vuelvo a mandar?</h3>
+            <p>Abrí el presupuesto y tocá <strong>Enviar recordatorio</strong>, o <strong>Copiar link del cliente</strong>. El link no cambia, sirve siempre el mismo.</p>
+
+            <h3>¿Los KPIs son del mes en curso?</h3>
+            <p>Sí. Cada 1° del mes, los contadores arrancan en cero. Los presupuestos anteriores siguen en la lista de abajo, no se pierden.</p>
+        </section>
+
+        <section id="contacto" class="help-section">
+            <h2>14. Soporte y contacto</h2>
+            <p>Si algo no funciona, tenés una duda puntual, o querés sugerir una mejora, escribinos:</p>
+            <p style="text-align:center;margin:18px 0;">
+                <a href="https://wa.me/595992316979?text=Hola%2C%20necesito%20ayuda%20con%20Presuya" target="_blank" rel="noopener" class="btn btn-whatsapp btn-block" style="max-width:320px;margin:0 auto;">Escribinos por WhatsApp</a>
+            </p>
+            <p class="help-foot">Gracias por usar Presuya. Queremos que cerrar un presupuesto sea lo más fácil posible.</p>
+        </section>
+
+    </div>
+
+</body>
+</html>

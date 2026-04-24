@@ -1211,6 +1211,194 @@ html, body {
 .public-foot .powered a { color: var(--primary-dark); border: none; padding: 0; }
 
 /* ============================================
+   PÁGINA DE AYUDA (ayuda.html)
+============================================ */
+.help-shell {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 16px 16px 60px;
+}
+
+.help-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--primary);
+    color: var(--black);
+    padding: 16px 18px;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+}
+.help-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 50%;
+    color: var(--black);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+.help-back:hover { background: rgba(0,0,0,0.18); }
+.help-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.15;
+}
+.help-subtitle {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-top: 2px;
+}
+
+.help-toc {
+    background: white;
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 16px;
+}
+.help-toc > strong {
+    display: block;
+    font-size: 12px;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 10px;
+}
+.help-toc ol {
+    margin: 0;
+    padding-left: 22px;
+    line-height: 1.9;
+}
+.help-toc a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+.help-toc a:hover { text-decoration: underline; }
+
+.help-section {
+    background: white;
+    border-radius: var(--radius);
+    padding: 20px 20px 24px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 14px;
+    scroll-margin-top: 16px;
+}
+.help-section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary);
+    border-radius: 0;
+}
+.help-section h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+.help-section p {
+    font-size: 14px;
+    color: var(--gray-900);
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+.help-section ul, .help-section ol {
+    margin: 6px 0 14px 0;
+    padding-left: 22px;
+}
+.help-section li {
+    font-size: 14px;
+    color: var(--gray-900);
+    line-height: 1.6;
+    margin-bottom: 6px;
+}
+.help-section li ul {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+.help-section code {
+    background: var(--gray-100);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    color: var(--primary-dark);
+}
+.help-section strong { color: var(--black); }
+.help-section em { color: var(--gray-700); }
+
+.tip {
+    background: var(--primary-light);
+    border-left: 3px solid var(--primary);
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--gray-900);
+    line-height: 1.55;
+    margin: 12px 0;
+}
+.tip strong { color: var(--primary-dark); }
+
+.estado-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.55;
+}
+.estado-list > div {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
+}
+.estado-list .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+.help-foot {
+    text-align: center;
+    color: var(--gray-500);
+    font-style: italic;
+    margin-top: 16px !important;
+    font-size: 13px !important;
+}
+
+/* Ícono "?" de ayuda en el header de las páginas con login */
+.help-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    color: var(--gray-700);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    transition: background 0.15s;
+}
+.help-link:hover { background: var(--gray-200); }
+
+/* ============================================
    DESKTOP (tablet/pc)
 ============================================ */
 @media (min-width: 768px) {
