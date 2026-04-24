@@ -1,7 +1,7 @@
 // ============================================
 // Service Worker básico — solo shell caching
 // ============================================
-const CACHE_NAME = 'presuya-v2';
+const CACHE_NAME = 'presuya-v3';
 const ASSETS = [
     './',
     './index.html',
@@ -32,11 +32,38 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
     const url = new URL(e.request.url);
-    // No cachear llamadas a supabase ni a CDNs dinámicos
     if (url.origin.includes('supabase.co') || url.pathname.includes('/auth/')) {
         return;
     }
     if (e.request.method !== 'GET') return;
+
+    // Navegaciones top-level: network-first, y si hay redirect reconstruimos el
+    // Response para evitar "a redirected response was used for a request whose
+    // redirect mode is not 'follow'". Cache como fallback offline.
+    if (e.request.mode === 'navigate') {
+        e.respondWith((async () => {
+            try {
+                const resp = await fetch(e.request.url, { credentials: 'same-origin' });
+                if (resp.redirected) {
+                    const body = await resp.blob();
+                    return new Response(body, {
+                        status: resp.status,
+                        statusText: resp.statusText,
+                        headers: resp.headers,
+                    });
+                }
+                if (resp.ok && url.origin === location.origin) {
+                    const clone = resp.clone();
+                    caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+                }
+                return resp;
+            } catch {
+                const cached = await caches.match(e.request);
+                return cached || caches.match('./index.html');
+            }
+        })());
+        return;
+    }
 
     e.respondWith(
         caches.match(e.request).then(cached => {
